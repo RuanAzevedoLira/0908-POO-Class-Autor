@@ -15,9 +15,58 @@ public class LivroService {
     @Autowired
     private LivroRepository livroRepository;
 
-    // Salvar ou atualizar um livro
+    // CREAD
     public Livro inserirLivro(Livro livro) {
         return livroRepository.save(livro);
+    }
+
+    // UPDATE
+
+    // Atualizar o título de um livro pelo ID
+    public Livro atualizarTitulo(Long id, String novoTitulo) {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+        if (livroOptional.isPresent()) {
+            Livro livro = livroOptional.get();
+            livro.setTitulo(novoTitulo);
+            return livroRepository.save(livro);
+        }
+        return null; // ou lance uma exceção se preferir
+    }
+
+    // Atualizar o gênero de um livro pelo ID
+    public Livro atualizarGenero(Long id, String novoGenero) {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+        if (livroOptional.isPresent()) {
+            Livro livro = livroOptional.get();
+            livro.setGenero(novoGenero);
+            return livroRepository.save(livro);
+        }
+        return null; // ou lance uma exceção se preferir
+    }
+
+    // Atualizar o número de páginas de um livro pelo ID
+    public Livro atualizarPaginas(Long id, Integer novasPaginas) {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+        if (livroOptional.isPresent()) {
+            Livro livro = livroOptional.get();
+            livro.setPaginas(novasPaginas);
+            return livroRepository.save(livro);
+        }
+        return null; // ou lance uma exceção se preferir
+    }
+
+    // Atualizar um livro completo pelo ID
+    public Livro atualizarLivro(Long id, Livro livroAtualizado) {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+        if (livroOptional.isPresent()) {
+            Livro livro = livroOptional.get();
+            livro.setTitulo(livroAtualizado.getTitulo());
+            livro.setGenero(livroAtualizado.getGenero());
+            livro.setPaginas(livroAtualizado.getPaginas());
+            // Atualize outros atributos conforme necessário
+            return livroRepository.save(livro);
+        }
+        return null; // ou lance uma exceção se preferir
     }
 
     // READ
@@ -32,7 +81,7 @@ public class LivroService {
         return livroRepository.findById(id);
     }
 
-    // Encontrar um livro por titulo
+    // Encontrar um livro por título
     public Livro buscarPeloTitulo(String titulo) {
         return livroRepository.findByTitulo(titulo);
     }
@@ -68,4 +117,5 @@ public class LivroService {
     public void deletaPeloId(Long id) {
         livroRepository.deleteById(id);
     }
+
 }

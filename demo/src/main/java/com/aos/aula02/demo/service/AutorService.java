@@ -1,6 +1,7 @@
 package com.aos.aula02.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,20 +14,52 @@ public class AutorService {
     @Autowired
     private AutorRepository autorRepository;
 
-    public void inserirAutor (Autor autor){
-        autorRepository.save(autor);
+    // CREATE
+    public Autor inserirAutor(Autor autor) {
+        return autorRepository.save(autor);
     }
 
-    public List<Autor> retonaTodosAutores(){
+    // READ
+
+    public List<Autor> buscarTodosAutores() {
         return autorRepository.findAll();
     }
 
-    public Autor buscarPeloCPF (String CPF){
+    public Optional<Autor> buscarPeloId(Long id) {
+        return autorRepository.findById(id);
+    }
+
+    public Autor buscarPeloNome(String nome) {
+        return autorRepository.findByNome(nome);
+    }
+
+    public Autor buscarPeloCPF(String CPF) {
         return autorRepository.findByCPF(CPF);
     }
 
-    public List<Autor> buscarPelaIdade (Short idade){
+    public List<Autor> buscarPelaIdade(Short idade) {
         return autorRepository.findByIdade(idade);
     }
 
+    // DELETE
+
+    public void deletaAutor(Autor autor) {
+        autorRepository.delete(autor);
+    }
+
+    public void deletaPeloId(Long id) {
+        autorRepository.deleteById(id);
+    }
+
+    public void deletePeloNome(String nome) {
+        autorRepository.deleteByNome(nome);
+    }
+
+    public void deletePeloCPF(String CPF) {
+        autorRepository.deleteByCPF(CPF);
+    }
+
+    public void deletePelaIdade(Short idade) {
+        autorRepository.deleteByIdade(idade);
+    }
 }
